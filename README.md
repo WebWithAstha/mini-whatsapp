@@ -1,4 +1,4 @@
-# Mini WhatsApp Clone
+# Mini WhatsApp 
 
 A simple WhatsApp clone project with one-to-one and group chat functionalities, built using Socket.io for real-time communication.
 
