@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Clone - Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200 h-screen">
+  <div class="flex flex-col justify-center items-center h-full bg-white">
+    <form class="p-6 w-full max-w-md" method="post" action="/register">
+      <h1 class="text-2xl font-semibold text-center mb-6">Create Account</h1>
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+        <input id="email" type="email" placeholder="Enter your email" name="email"
+          class="block w-full px-4 py-3 rounded-lg bg-gray-100 border-2 focus:outline-none focus:border-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="username" class="block text-gray-700 text-sm font-semibold mb-2">Username</label>
+        <input id="username" type="text" placeholder="Choose a username" name="username"
+          class="block w-full px-4 py-3 rounded-lg bg-gray-100 border-2 focus:outline-none focus:border-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+        <input id="password" type="password" placeholder="Choose a password" name="password"
+          class="block w-full px-4 py-3 rounded-lg bg-gray-100 border-2 focus:outline-none focus:border-blue-500">
+      </div>
+      <button type="submit"
+        class="block w-full px-4 py-3 mt-6 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg focus:outline-none focus:bg-green-600">Register</button>
+      <p class="text-sm text-center mt-4">Already have an account? <a href="/login"
+          class="text-blue-500 font-semibold">Log In</a></p>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100">
+    <div class="h-screen relative">
+        <div class="overlay hidden w-full h-full flex items-center justify-center bg-[rgb(1,1,1,.2)] absolute z-10">
+            <i onclick="closeOverlay()"
+                class="close-search cursor-pointer ri-close-circle-fill absolute right-4 top-4 text-3xl z-10 text-white"></i>
+            <div class="content shadow-2xl rounded-md overflow-hidden"></div>
+        </div>
+        <div class="header relative h-[6vh] flex gap-2 bg-zinc-100 items-center px-3">
+            <i class="ri-whatsapp-line text-2xl text-emerald-700"></i>
+            <h4 class="text-sm">WhatsApp</h4>
+            <h5 class="text-[.7rem] ml-2 text-zinc-500">Syncing... 00%</h5>
+            <a href="/logout"
+                class=" absolute right-3 text-sm bg-emerald-700 py-1 px-3 text-white rounded-md capitalise cursor-pointer hover:bg-emerald-800"><i
+                    class="ri-logout-box-line"> logout</i></a>
+        </div>
+        <div class="maincontent flex h-[94vh] relative">
+
+            <div class="sidebar bg-gray-100 flex flex-col items-center justify-between py-2 w-12">
+
+            </div>
+            <div
+                class="leftsection flex flex-col sm:w-72 md:w-80 bg-[#fefefe] text-gray-900 relative border rounded-s-md">
+                <div class="lefttopsection px-4 py-2">
+                    <div class="flex justify-between items-center border-gray-100 mt-2 mb-4">
+                        <h1 class="text-xl font-semibold">Chats</h1>
+                        <div class="options flex">
+                            <i onclick="showAddFriendBox()"
+                                class="adduser hover:bg-gray-100 px-4 py-1 rounded-sm cursor-pointer text-zinc-700 text-md font-thin ri-user-add-line"></i>
+                            <i onclick="showAddGroupBox()"
+                                class="hover:bg-gray-100 px-4 py-1 rounded-sm cursor-pointer text-zinc-700 text-md font-thin ri-group-line"></i>
+                        </div>
+                    </div>
+                    <div class="flex w-full mb-2">
+                        <h1 id="selected" onclick="showAllFriends(this)"
+                            class="selected type-friend w-1/2 bg-zinc-300 rounded-l shadow text-center cursor-pointer py-1">Friends</h1>
+                        <h1 id="selected" onclick="showJoinedGroups(this)"
+                            class="selected type-group w-1/2 text-center rounded-r shadow border-l-0 cursor-pointer py-1">Groups</h1>
+                    </div>
+
+                    <input
+                        class="search-friend border border-b-[.25vw] border-b-green-700 outline-none rounded-md w-full px-2 py-[1.5px]"
+                        type="text" placeholder="search">
+                </div>
+
+                <div class="users scrollbar flex gap-1 flex-col overflow-y-auto p-2">
+
+                    <%loggedUser.friends.forEach(function(friend){%>
+                        <div onclick="showChat('<%=friend.username%>','<%=friend.profileImg%>' ,'friend')"
+                            id="user<%=friend._id%>"
+                            class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                            <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="Profile Picture"
+                                class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                            <div>
+                                <%if(loggedUser.username==friend.username){%>
+                                    <p class="pointer-events-none font-semibold">
+                                        <%=friend.username%> (You)
+                                    </p>
+                                    <%}else{%>
+                                        <p class="pointer-events-none font-semibold">
+                                            <%=friend.username%>
+                                        </p>
+                                        <%}%>
+                                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                            </div>
+                        </div>
+                        <%})%>
+
+                            <!-- Add more chats here -->
+                </div>
+
+            </div>
+            <div class="rightsection flex-1 flex flex-col relative border-t">
+                <div
+                    class="overlay absolute w-full h-full bg-[#fcfcfc] flex flex-col items-center justify-center p-4 text-center">
+                    <i class="ri-whatsapp-line text-7xl text-[#dadada]"></i>
+                    <h2 class="text-lg text-black my-2">Whatsapp for Windows</h2>
+                    <h4 class="text-sm text-zinc-500">Send and recive messages without keeping your phone online.</h4>
+                    <h4 class="text-sm text-zinc-500">Use WhatsApp on upto 4 linked devices and 1 phone at the same
+                        time.
+                    </h4>
+                </div>
+                <!-- Chat Header -->
+                <div
+                    class="userheader bg-white text-gray-900 p-4 flex justify-between items-center border-b border-gray-100">
+                    <div class="user flex items-center">
+                        <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="Profile Picture"
+                            class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                        <div>
+                            <p class="username pointer-events-none font-semibold">Friend 1</p>
+                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                        </div>
+                    </div>
+                    <div class="icons flex">
+                        <i
+                            class="hover:bg-gray-100 px-4 py-2 border text-zinc-700 text-lg font-thin ri-vidicon-line"></i>
+                        <i
+                            class="hover:bg-gray-100 px-4 py-2 border-y border-r text-zinc-700 text-lg font-thin ri-phone-line"></i>
+                        <i
+                            class="hover:bg-gray-100 px-4 py-2 ml-1 border text-zinc-700 text-lg font-thin ri-search-line"></i>
+                    </div>
+                </div>
+                <!-- Chat Messages -->
+                <div style="background-image: url(https://i.pinimg.com/564x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg);"
+                    class="chats flex-1 w-full p-4 overflow-y-auto overflow-x-hidden scrollbar gap-1">
+
+                </div>
+
+                <!-- Message Input -->
+                <div class="bg-[#fefefe] py-1 px-2 border-t flex items-center">
+                    <i
+                        class="hover:bg-gray-100 px-4 py-2 rounded-sm cursor-pointer text-zinc-700 text-xl font-thin ri-emotion-line"></i>
+                    <i
+                        class="hover:bg-gray-100 px-4 py-2 rounded-sm cursor-pointer text-zinc-700 text-xl font-thin ri-attachment-2"></i>
+
+                    <input onkeydown="handleKeyDown(event)" type="text" placeholder="Type a message..."
+                        class="w-full px-4 py-2 bg-white rounded-full outline-none">
+                    <button onclick="sendMessage()" type="submit">
+                        <i
+                            class="hover:bg-gray-100 px-4 py-2 rounded-sm cursor-pointer text-zinc-700 text-xl font-thin ri-send-plane-2-line"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+        integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let socket = io();
+        socket.emit('join-server', '<%=loggedUser.username%>')
+
+        let receiver;
+        let chatType = 'friend';
+        let groupname;
+
+
+
+
+        // basic ui functionality
+
+        function changeBtnColor(elem) {
+            document.querySelectorAll(".selected").forEach(function (e) {
+                e.style.backgroundColor = "white"
+            })
+            if (elem.textContent) {
+                console.log((elem.textContent === "Friends"))
+
+                chatType = "friend"
+            } else {
+                console.log((elem.textContent === "Friends"))
+                chatType = "group"
+            }
+            elem.style.backgroundColor = "#d6d6d9"
+            // console.log(chatType)
+
+        }
+
+        function closeOverlay() {
+            document.querySelector(".overlay").classList.add("hidden");
+            document.querySelector(".overlay .content").innerHTML = '';
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === "Enter") sendMessage();
+        }
+
+        function scrollChatToBottom() {
+            const chatContainer = document.querySelector('.chats');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // friends related functionality
+
+        function showAllFriends(elem) {
+            changeBtnColor(elem)
+            axios.post(`/alljoined/friends`)
+                .then(friends => {
+                    let template = ``;
+                    friends.data.forEach(friend => {
+                        template += `
+                    <div onclick="showChat('${friend.username}','${friend.profileImg}')"
+                        id="user${friend._id}"
+                        class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="/images/uploads/${friend.profileImg}" alt="Profile Picture"
+                            class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                        <div>
+                            
+                                    <p class="pointer-events-none font-semibold">
+                                        ${friend.username}
+                                    </p>
+                                        <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                        </div>
+                    </div>
+                    `
+                    })
+                    document.querySelector(".leftsection .users").innerHTML = template;
+                })
+        }
+
+        function showAddFriendBox() {
+            document.querySelector('.overlay .content').innerHTML += `
+        <div class=" flex gap-1 flex-col bg-white px-2 py-2 h-96 w-72 rounded-md">
+            <input oninput="showSearchedUsers(this)" class="search-user  border border-b-[.25vw] border-b-green-700 outline-none rounded-md w-full px-2 py-1"
+                type="text" placeholder="Add friend..">
+            <div class="users scrollbar overflow-y-auto">
+            </div>
+        </div>
+        `
+            document.querySelector(".overlay").classList.remove("hidden");
+            document.querySelector(".overlay input").focus();
+        }
+
+        function showSearchedUsers(input) {
+            if (input.value !== "") {
+                fetch(`/searchusers/${input.value}`)
+                    .then(raw => raw.json())
+                    .then(function (users) {
+
+                        let template = ``;
+
+                        users.forEach(function (user) {
+                            template += `
+                <div onClick="addFriend('${user.username}','${user.profileImg}','${user._id}')" id="user${user._id}" class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                    <img src="/images/uploads/${user.profileImg}" alt="Profile Picture" class="w-10 h-10 rounded-full mr-4">
+                    <div>
+                        <p class="font-semibold">${user.username === '<%=loggedUser.username%>' ? user.username + ' (You)' : user.username}</p>
+                        <p class="text-sm text-gray-500">Last message</p>
+                    </div>
+                </div>
+                `
+                        })
+                        document.querySelector(".overlay .content .users").innerHTML = template;
+                    })
+            }
+        }
+
+        function addFriend(username, profileImg, userId) {
+            if (!(document.querySelector(`.leftsection #user${userId}`))) {
+                axios.post(`/addfriend`, {
+                    data: userId
+                })
+                if (chatType === 'friend') {
+
+                    document.querySelector(".leftsection .users").innerHTML += `
+                        <div onClick=showChat('${username}','${profileImg}') id="user${userId}" class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="/images/uploads/${profileImg}" alt="Profile Picture" class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                        <div>
+                            <p class="pointer-events-none font-semibold">${username === '<%=loggedUser.username%>' ? username + ' (You)' : username}</p>
+                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                        </div>
+                    </div>
+                        `
+                }
+            }
+            closeOverlay()
+
+        }
+
+
+
+        // group related functionality
+
+        function showJoinedGroups(elem) {
+            changeBtnColor(elem)
+            axios.post(`/alljoined/groups`)
+                .then(groups => {
+                    let template = ``;
+                    groups.data.forEach(group => {
+                        template += `
+                        <div onclick="showChat('${group.groupname}','${group.profileImg}','group')"
+                            id="user${group._id}"
+                            class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                            <img src="/images/uploads/${group.profileImg}" alt="Profile Picture"
+                                class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                            <div>
+                                
+                                        <p class="pointer-events-none font-semibold">
+                                            ${group.groupname}
+                                        </p>
+                                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                            </div>
+                        </div>
+                        `
+                    })
+                    document.querySelector(".leftsection .users").innerHTML = template;
+                })
+        }
+
+        function showAddGroupBox() {
+            document.querySelector('.overlay .content').innerHTML += `
+            <div class="flex group-opt justify-center w-80 h-40 bg-gray-100 items-center flex-col gap-2">
+                    <h2 onclick="showCreateGroupInput(this)" class="bg-emerald-700 w-[70%] cursor-pointer text-center px-3 py-2 text-white rounded-md">Create Group +</h2>
+                    <h2 onclick="showAllGroups()" class="bg-emerald-700 w-[70%] cursor-pointer text-center px-3 py-2 text-white rounded-md">Join Group</h2>
+                </div>
+            `
+            document.querySelector(".overlay").classList.remove("hidden");
+        }
+
+        function GoBackToShowAddGroupBox() {
+            document.querySelector('.overlay .content').innerHTML = ``
+            showAddGroupBox()
+        }
+
+        function showCreateGroupInput(elem) {
+            document.querySelector(".overlay .content").innerHTML = `
+            <div class="create-new-group w-80 h-40 flex flex-col items-center justify-center items-center bg-white flex-col gap-2">
+                <i onclick="GoBackToShowAddGroupBox()" class="ri-arrow-left-line text-lg bg-emerald-700 hover:bg-emerald-800 rounded-full p-1.5 text-white w-8 h-8 flex items-center justify-center"></i>
+                <input type="text" placeholder="Enter group name.." class="groupname-input w-[70%] border border-emerald-700 border-4 rounded-md p-1 outline-none px-3">
+                <h2 onclick="createGroup(this)" class="bg-emerald-700 hover:bg-emerald-800 w-[70%] cursor-pointer text-center px-5 py-2 text-white rounded-md">Create Group</h2>
+            </div>
+            `
+            document.querySelector('.create-new-group input').focus()
+        }
+
+        function showAllGroups() {
+            document.querySelector(".content").innerHTML = `
+            <div class="flex flex-col items-center bg-white w-72 h-96 px-2">
+                <div class="flex w-full items-center gap-2">
+                    <i onclick="GoBackToShowAddGroupBox()" class="ri-arrow-left-line my-1.5 text-lg bg-emerald-700 hover:bg-emerald-800 rounded-full p-1.5 text-white w-8 h-8 flex items-center justify-center"></i>
+                    <input oninput="showSearchedGroups(this)" class="search-user  border border-b-[.25vw] border-b-green-700 outline-none rounded-md w-full px-2 py-1"
+                            type="text" placeholder="Search groups...">
+                    </div>
+            <div class="groups users border-t flex flex-1 scrollbar overflow-y-auto py-2 w-full items-center flex-col">
+            </div>
+            </div>
+            `
+            fetch('/allgroups')
+                .then(raw => raw.json())
+                .then((groups) => {
+                    console.log(groups)
+                    groups.forEach(function (group) {
+                        document.querySelector(".groups").innerHTML += `
+                <div onclick="addGroup('${group.groupname}','${group.profileImg}','${group._id}')" class="group w-full p-4 hover:bg-gray-200 cursor-pointer flex items-center">
+                    <img src="/images/uploads/${group.profileImg}" alt="Profile Picture"
+                        class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                    <div>
+                            <p class="pointer-events-none font-semibold">
+                                ${group.groupname}
+                            </p>
+                                
+                                    <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                    </div>
+            </div>
+            `
+                    })
+
+                })
+
+
+        }
+
+        function showSearchedGroups(input) {
+            if (input.value !== "") {
+                fetch(`/searchgroups/${input.value}`)
+                    .then(raw => raw.json())
+                    .then(function (groups) {
+                        console.log(groups)
+
+                        let template = ``;
+
+                        groups.forEach(function (group) {
+                            template += `
+                                <div onclick="addGroup('${group.groupname}','${group.profileImg}','${group._id}')" class="group w-full p-4 hover:bg-gray-200 cursor-pointer flex items-center">
+                    <img src="/images/uploads/${group.profileImg}" alt="Profile Picture"
+                        class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                    <div>
+                            <p class="pointer-events-none font-semibold">
+                                ${group.groupname}
+                            </p>
+                                
+                                    <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                    </div>
+            </div>
+                        `
+                        })
+                        document.querySelector(".overlay .content .users").innerHTML = template;
+                    })
+            }
+        }
+
+        function createGroup(elem) {
+            let groupnameinp = document.querySelector('.create-new-group input')
+            if (groupnameinp.value === '') return;
+            closeOverlay()
+            socket.emit('create-group', { groupname: groupnameinp.value, username: '<%=loggedUser.username%>' })
+            if (chatType === 'group') {
+                document.querySelector(".leftsection .users").innerHTML += `
+                    <div onclick="showChat('${groupnameinp.value}','${groupnameinp.profileImg}','group')" id="user${groupnameinp.value}" class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                    <img src="/images/uploads/group.jpg" alt="Profile Picture" class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                    <div>
+                            <p class="pointer-events-none font-semibold">${groupnameinp.value}</p>
+                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                    </div>
+                </div>
+                    `
+            }
+        }
+
+        function addGroup(groupname, profileImg, groupId) {
+            socket.emit('add-group', {
+                groupname: groupname,
+                username: '<%=loggedUser.username%>'
+            })
+            if (chatType === 'group') {
+                document.querySelector(".leftsection .users").innerHTML += `
+                <div onclick="showChat('${groupname}','${profileImg}','group')"
+                            id="user${groupId}" class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                            <img src="/images/uploads/${profileImg}" alt="Profile Picture"
+                                class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                            <div>
+
+                                <p class="pointer-events-none text-black font-semibold">
+                                    ${groupname}
+                                </p>
+                                <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                            </div>
+                        </div>
+                
+                `
+
+            }
+            closeOverlay()
+        }
+
+        function showChat(username, profileImg, type) {
+            chatType = type;
+            document.querySelector(".rightsection .user .username").textContent = username
+            document.querySelector(".rightsection .user img").setAttribute('src', `/images/uploads/${profileImg}`)
+            document.querySelector(".rightsection .overlay").classList.add('hidden')
+            document.querySelector(".rightsection input").focus()
+            receiver = username
+            if (type === "group") {
+                socket.emit('join-group', receiver)
+            }
+            axios.post(`/allchats`, {
+                receiver,
+                chatType
+            }).then(chats => {
+                document.querySelector(".rightsection .chats").innerHTML = ''
+                chats.data.forEach(chat => {
+                    if (chat.sender === '<%=loggedUser.username%>') {
+                        appendOutgoingMessage(chat.message)
+                    } else {
+                        if (type === "group") {
+                            appendGroupIncomingMessage(chat.message, chat.sender)
+                        } else {
+
+                            appendIncomingMessage(chat.message)
+                        }
+                    }
+                })
+                scrollChatToBottom()
+            })
+            groupname = username
+
+
+        }
+
+        function appendGroupIncomingMessage(msg, sendername, senderprofile) {
+            document.querySelector('.chats').innerHTML +=
+                `
+                <div class="incoming-msg flex w-fit mb-1 gap-1">
+                    <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="" class="h-4 aspect-square shrink-0 bg-zinc-400 rounded-full">
+                    <div class="max-w-xl bg-white text-gray-700 px-3 rounded-md">
+                        <span class="text-[.7rem] font-medium mb-1 pb-[2px] block italic text-zinc-600 hover:border-zinc-400 border-b border-transparent mt-2 cursor-pointer leading-[.5rem]">${sendername}</span>
+                            <p class="text-sm leading-3 mb-2.5">${msg}</p>
+                        </div>
+                </div>
+                `
+        }
+
+
+
+        // message related functionality
+
+
+        function appendOutgoingMessage(msg) {
+            document.querySelector('.chats').innerHTML += `
+                        <div class="outgoing-msg flex w-fit max-w-xl mb-1 rounded-md bg-[#d9fdd3] px-3 py-1 pb-2 ml-auto">
+                            <p class="text-sm block">${msg}</p>
+                        </div>
+            `
+        }
+
+        function appendIncomingMessage(msg) {
+            document.querySelector('.chats').innerHTML +=
+                `
+                        <div class="incoming-msg w-fit max-w-xl mb-1 rounded-lg bg-white text-gray-700 p-3">
+                            <p class="text-sm">${msg}</p>
+                        </div>
+                `
+        }
+
+        function sendMessage() {
+            let msg = document.querySelector(".rightsection input")
+            if (msg.value === '') return;
+            appendOutgoingMessage(msg.value)
+
+            msg.focus()
+            scrollChatToBottom()
+
+            if (chatType !== "group") {
+                socket.emit('send-private-message', {
+                    sender: '<%=loggedUser.username%>',
+                    receiver,
+                    message: msg.value
+
+                })
+            } else {
+                socket.emit('send-group-message', {
+                    sender: '<%=loggedUser.username%>',
+                    receiver: groupname,
+                    message: msg.value
+                })
+            }
+
+            msg.value = ''
+
+        }
+
+
+        socket.on('receive-private-message', messageObject => {
+            if (messageObject.sender === receiver) appendIncomingMessage(messageObject.message)
+            scrollChatToBottom()
+        })
+
+        socket.on('receive-group-message', messageObject => {
+            if (messageObject.receiver === groupname) appendGroupIncomingMessage(messageObject.message, messageObject.sender)
+            scrollChatToBottom()
+        })
+
+
+    </script>
+    <script src="/javascripts/script.js"></script>
+
+</body>
+
+</html>

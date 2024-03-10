@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="leftsection flex flex-col w-80 bg-[#fefefe] text-gray-900 relative">
+            <div class="lefttopsection px-4 py-2">
+                <div class="flex justify-between items-center border-gray-100 mt-2 mb-4">
+                    <h1 class="text-xl font-semibold">Chats</h1>
+                    <div class="options flex gap-2">
+                        <i class="ri-user-add-fill"></i>
+                        <i class="ri-edit-box-line cursor-pointer"></i>
+                        <i class="ri-menu-5-line cursor-pointer"></i>
+                    </div>
+                </div>
+                <input
+                    class="search-user border border-b-[.25vw] border-b-green-700 outline-none rounded-md w-full px-2 py-[1.5px]"
+                    type="text" placeholder="search">
+            </div>
+
+            <!-- Chat list -->
+            <div class="users scrollbar flex gap-1 flex-col overflow-y-auto p-2">
+                <!-- Sample Chat -->
+                <div class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                    <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="Profile Picture"
+                        class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                    <div>
+                        <p class="pointer-events-none font-semibold">Friend 1</p>
+                        <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                    </div>
+                </div>
+                <%loggedUser.friends.forEach(function(friend){%>
+                    <div class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="Profile Picture"
+                            class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                        <div>
+                            <p class="pointer-events-none font-semibold">Friend 1</p>
+                            <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                        </div>
+                    </div>
+                <%})%>
+
+                        <!-- Add more chats here -->
+            </div>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="rightsection flex-1 flex flex-col relative">
+            <!-- Chat Header -->
+            <div
+                class="overlay hidden absolute w-full h-full bg-[#fcfcfc] flex flex-col items-center justify-center p-4 text-center">
+                <i class="ri-whatsapp-line text-7xl text-[#dadada]"></i>
+                <h2 class="text-lg text-black my-2">Whatsapp for Windows</h2>
+                <h4 class="text-sm text-zinc-500">Send and recive messages without keeping your phone online.</h4>
+                <h4 class="text-sm text-zinc-500">Use WhatsApp on upto 4 linked devices and 1 phone at the same time.
+                </h4>
+            </div>
+            <div class="userheader bg-white text-gray-900 p-4 flex justify-between items-center border-b border-gray-100">
+                <div class="user flex items-center">
+                    <img src="/images/uploads/<%=loggedUser.profileImg%>" alt="Profile Picture"
+                        class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                    <div>
+                        <p class="pointer-events-none font-semibold">Friend 1</p>
+                        <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                    </div>
+                </div>
+                <div class="icons flex">
+                   <i class="hover:bg-gray-100 px-4 py-2 border text-zinc-700 text-lg font-thin ri-vidicon-line"></i>
+                   <i class="hover:bg-gray-100 px-4 py-2 border-y border-r text-zinc-700 text-lg font-thin ri-phone-line"></i>
+                   <i class="hover:bg-gray-100 px-4 py-2 ml-1 border text-zinc-700 text-lg font-thin ri-search-line"></i>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chats flex-1 p-4 overflow-y-auto scrollbar">
+                <!-- Sender's Message -->
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">Hey there!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">Hi! How are you?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">Hey there!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">kya hui?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">dar gyi!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">heart attack hi aa gyi?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">pran hi nikl gyi!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">tervi me kya khilayigi?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">tera gost khilayegi jani!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">vegetarian hu jani me na aau?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-4">
+                    <div class="max-w-xs rounded-lg bg-green-500 text-white p-3">
+                        <p class="text-sm">dar gyiii!</p>
+                    </div>
+                </div>
+                <!-- Receiver's Message -->
+                <div class="flex mb-4">
+                    <div class="max-w-xs rounded-lg bg-white text-gray-700 p-3">
+                        <p class="text-sm">offline.</p>
+                    </div>
+                </div>
+                <!-- Add more messages here -->
+            </div>
+
+            <!-- Message Input -->
+            <div class="bg-gray-200 p-4 border-t border-gray-300">
+                <input type="text" placeholder="Type a message..."
+                    class="w-full px-4 py-2 bg-white rounded-full outline-none">
+            </div>
+        </div>
+    </div>9691952520
+
+
+    <script>
+        document.querySelector(".search-user")
+            .addEventListener("input", function (dets) {
+                console.log(this.value)
+                if (this.value !== "") {
+                    fetch(`/search/${this.value}`)
+                        .then(raw => raw.json())
+                        .then(function (users) {
+                            console.log(users)
+
+                            let template = ``;
+
+                            users.forEach(function (user) {
+                                template += `
+                        <div class="user p-4 hover:bg-gray-100 cursor-pointer flex items-center">
+                            <img src="/images/uploads/${user.profileImg}" alt="Profile Picture" class="pointer-events-none w-10 h-10 rounded-full mr-4">
+                            <div>
+                                <p class="pointer-events-none font-semibold">${user.username}</p>
+                                <p class="pointer-events-none text-sm text-gray-500">Last message</p>
+                            </div>
+                        </div>
+                        `
+                            })
+                            document.querySelector(".users").innerHTML = template;
+                        })
+
+                }
+            })
+
+        document.querySelector(".users")
+            .addEventListener('click', function (dets) {
+                console.log(dets.target)
+                if (dets.target.classList.contains('user')) {
+                    if (document.querySelector('.overlay')) {
+                        document.querySelector('.overlay').classList.add('hidden')
+                    }
+
+                }
+            })
+    </script>
+</body>
+
+</html>
