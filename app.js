@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressSession = require('express-session');
+const MongoStore = require('connect-mongo'); // Add MongoStore for session management
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,7 +19,11 @@ app.set('view engine', 'ejs');
 app.use(expressSession({
   resave:false,
   saveUninitialized:false,
-  secret:"helo kitty no kept"
+  secret:"helo kitty no kept",
+  store: MongoStore.create({ // Create a MongoDB session store
+    mongoUrl: 'mongodb+srv://astha:astha123@internshala.f81pb0w.mongodb.net/miniwhatsapp', // Your MongoDB connection string
+    ttl: 14 * 24 * 60 * 60 // = 14 days. Default TTL is 14 days
+  })
 }))
 
 app.use(passport.initialize())
