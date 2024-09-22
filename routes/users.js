@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const plm = require('passport-local-mongoose')
 
-mongoose.connect('mongodb://127.0.0.1:27017/whatsappclone')
+mongoose.connect('mongodb+srv://astha:astha123@internshala.f81pb0w.mongodb.net/miniwhatsapp')
 
 const userSchema = mongoose.Schema({
   username: String,
